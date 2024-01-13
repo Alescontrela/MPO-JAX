@@ -3,7 +3,6 @@ import jax.numpy as jnp
 import numpy as onp
 from flax import linen as nn
 from flax.core.frozen_dict import FrozenDict
-from haiku import PRNGSequence
 from jax import random
 
 
@@ -33,7 +32,7 @@ def mse(pred: jnp.ndarray, true: jnp.ndarray) -> float:
 
 @jax.jit
 def sample_from_multivariate_normal(
-    rng: PRNGSequence, mean: jnp.ndarray, cov: jnp.ndarray, shape: tuple = None
+    rng: jax.random.PRNGKey, mean: jnp.ndarray, cov: jnp.ndarray, shape: tuple = None
 ) -> jnp.ndarray:
     return random.multivariate_normal(rng, mean, cov, shape=shape)
 

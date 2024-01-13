@@ -4,7 +4,6 @@ import jax
 import jax.numpy as jnp
 from flax import linen as nn
 from flax.core.frozen_dict import FrozenDict
-from haiku import PRNGSequence
 from jax import random
 
 from jax_rl.utils import gaussian_likelihood
@@ -121,7 +120,7 @@ class Constant(nn.Module):
 
 
 def build_constant_model(
-    start_value: float, init_rng: PRNGSequence, absolute: bool = False
+    start_value: float, init_rng: jax.random.PRNGKey, absolute: bool = False
 ) -> FrozenDict:
     constant = Constant(start_value=start_value, absolute=absolute)
     init_variables = constant.init(init_rng)
@@ -139,7 +138,7 @@ def apply_constant_model(
 
 
 def build_td3_actor_model(
-    input_shapes: float, action_dim: int, max_action: float, init_rng: PRNGSequence
+    input_shapes: float, action_dim: int, max_action: float, init_rng: jax.random.PRNGKey
 ) -> FrozenDict:
     init_batch = jnp.ones(input_shapes, jnp.float32)
     actor = TD3Actor(action_dim=action_dim, max_action=max_action)
@@ -201,7 +200,7 @@ def apply_gaussian_policy_model(
     action_dim: int,
     max_action: float,
     state: jnp.ndarray,
-    key: PRNGSequence,
+    key: jax.random.PRNGKey,
     sample: bool,
     MPO: bool,
 ) -> jnp.ndarray:

@@ -4,11 +4,18 @@ import os
 import numpy as np
 from dm_control import suite
 
+import sys, pathlib
+directory = pathlib.Path(__file__).resolve().parent.parent
+sys.path.append(str(directory))
+sys.path.append(str(directory.parent))
+print(directory.name)
+__package__ = directory.name
+
 from buffers import ReplayBuffer
 from dm_control_utils import flat_obs
 from MPO import MPO
-from SAC import SAC
-from TD3 import TD3
+# from SAC import SAC
+# from TD3 import TD3
 from train_loops import dm_control_train_loop
 
 
@@ -121,11 +128,11 @@ if __name__ == "__main__":
         policy = SAC(**kwargs)
     elif args.policy == "MPO":
         policy = MPO(**kwargs)
-    if args.load_model != "":
-        policy_file = (
-            args.file_name if args.load_model == "default" else args.load_model
-        )
-        policy.load(f"./models/{policy_file}")
+    # if args.load_model != "":
+    #     policy_file = (
+    #         args.file_name if args.load_model == "default" else args.load_model
+    #     )
+    #     policy.load(f"./models/{policy_file}")
 
     replay_buffer = ReplayBuffer(state_dim, action_dim, max_size=int(args.buffer_size),)
 

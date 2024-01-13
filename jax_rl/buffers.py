@@ -1,6 +1,5 @@
 import jax
 import numpy as onp
-from haiku import PRNGSequence
 from jax import random
 
 
@@ -28,7 +27,7 @@ class ReplayBuffer:
         self.ptr = (self.ptr + 1) % self.max_size
         self.size = min(self.size + 1, self.max_size)
 
-    def sample(self, rng: PRNGSequence, batch_size: int):
+    def sample(self, rng: jax.random.PRNGKey, batch_size: int):
         ind = random.randint(rng, (batch_size,), 0, self.size)
 
         return (
