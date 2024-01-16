@@ -56,6 +56,8 @@ class DoubleCritic(nn.Module):
         q1 = nn.tanh(q1)
         q1 = nn.Dense(features=500)(q1)
         q1 = nn.elu(q1)
+        q1 = nn.Dense(features=500)(q1)
+        q1 = nn.elu(q1)
         q1 = nn.Dense(features=1)(q1)
 
         if Q1:
@@ -82,6 +84,8 @@ class GaussianPolicy(nn.Module):
         x = nn.Dense(features=200)(x)
         x = nn.LayerNorm()(x)
         x = nn.tanh(x)
+        x = nn.Dense(features=200)(x)
+        x = nn.elu(x)
         x = nn.Dense(features=200)(x)
         x = nn.elu(x)
         x = nn.Dense(features=2 * self.action_dim)(x)

@@ -48,11 +48,11 @@ def dm_control_train_loop(args: dict, policy, replay_buffer: ReplayBuffer, env):
         if t >= args.start_timesteps:
             for _ in range(args.train_steps):
                 if args.policy == "MPO":
-                    policy.train(
+                    policy = policy.update(
                         replay_buffer, args.batch_size, args.num_action_samples
                     )
                 else:
-                    policy.train(replay_buffer, args.batch_size)
+                    policy = policy.train(replay_buffer, args.batch_size)
 
         if timestep.last():
             # +1 to account for 0 indexing. +0 on ep_timesteps since it will increment +1 even if done=True

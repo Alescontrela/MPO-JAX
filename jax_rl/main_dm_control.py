@@ -127,7 +127,7 @@ if __name__ == "__main__":
         kwargs["tau"] = args.tau
         policy = SAC(**kwargs)
     elif args.policy == "MPO":
-        policy = MPO(**kwargs)
+        policy = MPO.create(**kwargs)
     # if args.load_model != "":
     #     policy_file = (
     #         args.file_name if args.load_model == "default" else args.load_model
